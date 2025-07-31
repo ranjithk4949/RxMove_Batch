@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Invoice</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f3f4f6;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #1E293B, #475569); padding: 30px; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 24px;">Monthly Invoice</h1>
+            <p style="color: #CBD5E1; margin: 10px 0 0 0;">{{company.name}} - Pharmacy Delivery Platform</p>
+        </div>
+        
+        <!-- Content -->
+        <div style="padding: 30px;">
+            <h2 style="color: #1F2937; margin-top: 0;">Hello {{pharmacy.name}}!</h2>
+            
+            <p style="color: #4B5563; line-height: 1.6; margin-bottom: 20px;">
+                Your monthly invoice for <strong>{{reportPeriod}}</strong> is ready. 
+                Thank you for using {{company.name}} for your pharmacy delivery needs.
+            </p>
+
+            <!-- Invoice Summary -->
+            <div style="background: #1E293B; color: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h3 style="margin: 0 0 15px 0; color: #F1F5F9;">Invoice Summary</h3>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 8px 0; color: #CBD5E1;">Invoice Number:</td>
+                        <td style="padding: 8px 0; color: white; text-align: right; font-weight: bold;">{{invoiceNumber}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 0; color: #CBD5E1;">Service Period:</td>
+                        <td style="padding: 8px 0; color: white; text-align: right; font-weight: bold;">{{reportPeriod}}</td>
+                    </tr>
+                    <tr style="border-top: 1px solid #475569;">
+                        <td style="padding: 12px 0 8px 0; color: #CBD5E1; font-size: 16px;">Monthly App Fee:</td>
+                        <td style="padding: 12px 0 8px 0; color: #10B981; text-align: right; font-weight: bold; font-size: 18px;">{{billing.appFeeFormatted}}</td>
+                    </tr>
+                    <tr style="border-top: 2px solid #10B981;">
+                        <td style="padding: 12px 0 8px 0; color: white; font-size: 18px; font-weight: bold;">TOTAL AMOUNT DUE:</td>
+                        <td style="padding: 12px 0 8px 0; color: #10B981; text-align: right; font-weight: bold; font-size: 20px;">{{billing.totalAmountDueFormatted}}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Performance Summary -->
+            {{#if stats.totalOrders}}
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 20px; margin: 20px 0;">
+                <h3 style="color: #166534; margin-top: 0; margin-bottom: 15px;">Monthly Performance</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>
+                        <div style="color: #166534; font-weight: 600;">Orders Processed:</div>
+                        <div style="color: #15803d; font-size: 18px; font-weight: bold;">{{stats.totalOrders}}</div>
+                    </div>
+                    <div>
+                        <div style="color: #166534; font-weight: 600;">Successfully Delivered:</div>
+                        <div style="color: #15803d; font-size: 18px; font-weight: bold;">{{stats.deliveredOrders}} ({{stats.deliveryRate}}%)</div>
+                    </div>
+                    <div>
+                        <div style="color: #166534; font-weight: 600;">Delivery Revenue:</div>
+                        <div style="color: #15803d; font-size: 18px; font-weight: bold;">{{stats.totalRevenueFormatted}}</div>
+                    </div>
+                    <div>
+                        <div style="color: #166534; font-weight: 600;">Average Order Value:</div>
+                        <div style="color: #15803d; font-size: 18px; font-weight: bold;">{{stats.averageOrderValueFormatted}}</div>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+
+            <!-- Payment Instructions -->
+            <div style="background: #FEF3C7; border: 1px solid #F59E0B; border-radius: 8px; padding: 20px; margin: 20px 0;">
+                <h3 style="color: #92400E; margin-top: 0; margin-bottom: 15px;">Payment Instructions</h3>
+                <div style="color: #78350F; font-size: 14px; line-height: 1.6;">
+                    <p style="margin: 0 0 10px 0;"><strong>Amount Due:</strong> {{billing.totalAmountDueFormatted}}</p>
+                    <p style="margin: 0 0 10px 0;"><strong>Due Date:</strong> Net 30 Days</p>
+                    <p style="margin: 0 0 10px 0;"><strong>Payment Methods:</strong></p>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li>Bank Transfer (preferred)</li>
+                        <li>Credit Card</li>
+                        <li>E-Transfer to {{company.email}}</li>
+                    </ul>
+                    <p style="margin: 15px 0 0 0;">
+                        For payment arrangements or questions, please contact us at {{company.email}} or {{company.phone}}
+                    </p>
+                </div>
+            </div>
+
+            <p style="color: #4B5563; line-height: 1.6; margin-bottom: 20px;">
+                The detailed PDF invoice is attached to this email. Please retain this for your records.
+            </p>
+
+            <!-- Call to Action -->
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://rxmove.ca" 
+                   style="background: linear-gradient(135deg, #3B82F6, #14B8A6); color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+                    Visit RxMove Dashboard
+                </a>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div style="background: #F9FAFB; padding: 20px; text-align: center; border-top: 1px solid #E5E7EB;">
+            <p style="color: #6B7280; font-size: 12px; margin: 0;">
+                <strong>{{company.name}}</strong><br>
+                {{company.phone}} | {{company.email}}
+            </p>
+            <p style="color: #6B7280; font-size: 11px; margin: 10px 0 0 0;">
+                This invoice was automatically generated on {{generatedDate}} (EST/EDT).
+            </p>
+        </div>
+    </div>
+</body>
+</html>
