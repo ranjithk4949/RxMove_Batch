@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Delivery Report</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f3f4f6;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #3B82F6, #14B8A6); padding: 30px; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 24px;">Daily Delivery Report</h1>
+            <p style="color: #E5E7EB; margin: 10px 0 0 0;">{{company.name}} - Pharmacy Delivery Platform</p>
+        </div>
+        
+        <!-- Content -->
+        <div style="padding: 30px;">
+            <h2 style="color: #1F2937; margin-top: 0;">Hello {{pharmacy.name}}!</h2>
+            
+            <p style="color: #4B5563; line-height: 1.6; margin-bottom: 20px;">
+                Here's your daily delivery report for <strong>{{reportDate}}</strong>.
+            </p>
+
+            <!-- Quick Summary -->
+            <div style="background: #F3F4F6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h3 style="color: #1F2937; margin-top: 0; margin-bottom: 15px;">Quick Summary</h3>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 8px 0; color: #4B5563; font-weight: 600;">Total Orders:</td>
+                        <td style="padding: 8px 0; color: #1F2937; text-align: right; font-weight: bold;">{{stats.totalOrders}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 0; color: #4B5563; font-weight: 600;">Delivered Orders:</td>
+                        <td style="padding: 8px 0; color: #059669; text-align: right; font-weight: bold;">{{stats.deliveredOrders}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 0; color: #4B5563; font-weight: 600;">Delivery Success Rate:</td>
+                        <td style="padding: 8px 0; color: #3B82F6; text-align: right; font-weight: bold;">{{stats.deliveryRate}}%</td>
+                    </tr>
+                    <tr style="border-top: 1px solid #D1D5DB;">
+                        <td style="padding: 12px 0 8px 0; color: #4B5563; font-weight: 600;">Total Delivery Revenue:</td>
+                        <td style="padding: 12px 0 8px 0; color: #059669; text-align: right; font-weight: bold; font-size: 16px;">{{stats.totalRevenueFormatted}}</td>
+                    </tr>
+                    {{#if stats.totalToCollect}}
+                    <tr>
+                        <td style="padding: 8px 0; color: #4B5563; font-weight: 600;">Amount to Collect:</td>
+                        <td style="padding: 8px 0; color: #D97706; text-align: right; font-weight: bold;">{{stats.totalToCollectFormatted}}</td>
+                    </tr>
+                    {{/if}}
+                    {{#if stats.totalCollected}}
+                    <tr>
+                        <td style="padding: 8px 0; color: #4B5563; font-weight: 600;">Amount Collected:</td>
+                        <td style="padding: 8px 0; color: #059669; text-align: right; font-weight: bold;">{{stats.totalCollectedFormatted}}</td>
+                    </tr>
+                    {{/if}}
+                </table>
+            </div>
+
+            <p style="color: #4B5563; line-height: 1.6; margin-bottom: 20px;">
+                Please find the detailed PDF report attached to this email. The report includes all order information, 
+                customer details, delivery addresses, costs, and collection amounts.
+            </p>
+
+            <!-- Call to Action -->
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://rxmove.ca" 
+                   style="background: linear-gradient(135deg, #3B82F6, #14B8A6); color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+                    Visit RxMove Dashboard
+                </a>
+            </div>
+
+            <!-- Support Information -->
+            <div style="background: #EFF6FF; border: 1px solid #DBEAFE; border-radius: 8px; padding: 15px; margin: 20px 0;">
+                <h4 style="color: #1E40AF; margin: 0 0 10px 0;">Need Help?</h4>
+                <p style="color: #1E3A8A; margin: 0; font-size: 14px;">
+                    If you have any questions about this report or need assistance, please contact our support team:
+                </p>
+                <p style="color: #1E3A8A; margin: 5px 0 0 0; font-size: 14px;">
+                    📧 {{company.email}} | 📞 {{company.phone}}
+                </p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div style="background: #F9FAFB; padding: 20px; text-align: center; border-top: 1px solid #E5E7EB;">
+            <p style="color: #6B7280; font-size: 12px; margin: 0;">
+                This report was automatically generated by {{company.name}} on {{generatedDate}} (EST/EDT).
+            </p>
+            <p style="color: #6B7280; font-size: 12px; margin: 5px 0 0 0;">
+                © {{company.name}} - All rights reserved
+            </p>
+        </div>
+    </div>
+</body>
+</html>
