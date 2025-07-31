@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Invoice - {{reportPeriod}}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .invoice-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .company-info h1 {
+            font-size: 32px;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        
+        .company-tagline {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .company-details {
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        .invoice-details {
+            text-align: right;
+        }
+        
+        .invoice-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+        
+        .invoice-meta {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .invoice-meta div {
+            margin-bottom: 8px;
+        }
+        
+        .invoice-meta strong {
+            color: #1e293b;
+        }
+        
+        .bill-to {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .bill-to h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .billing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .billing-table th {
+            background: #1e293b;
+            color: white;
+            font-weight: 600;
+            padding: 15px;
+            text-align: left;
+            font-size: 14px;
+        }
+        
+        .billing-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+        
+        .billing-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .billing-table .amount {
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        .total-row {
+            background: #f8fafc;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .total-row .amount {
+            color: #059669;
+            font-size: 18px;
+        }
+        
+        .stats-section {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .stats-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .orders-summary {
+            margin: 30px 0;
+        }
+        
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .orders-table th {
+            background: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            padding: 12px 8px;
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .orders-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 11px;
+        }
+        
+        .orders-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        
+        .payment-info {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .payment-info h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+        }
+        
+        .payment-info p {
+            color: #78350f;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            background: #1e293b;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .footer p {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        @media print {
+            .container {
+                max-width: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Invoice Header -->
+        <div class="invoice-header">
+            <div class="company-info">
+                <h1>{{company.name}}</h1>
+                <div class="company-tagline">Pharmacy Delivery Platform</div>
+                <div class="company-details">
+                    {{company.address}}<br>
+                    Email: {{company.email}}<br>
+                    Phone: {{company.phone}}
+                </div>
+            </div>
+            <div class="invoice-details">
+                <div class="invoice-title">MONTHLY INVOICE</div>
+                <div class="invoice-meta">
+                    <div><strong>Invoice #:</strong> {{invoiceNumber}}</div>
+                    <div><strong>Invoice Date:</strong> {{generatedDate}}</div>
+                    <div><strong>Service Period:</strong> {{reportPeriod}}</div>
+                    <div><strong>Due Date:</strong> Net 30 Days</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bill To -->
+        <div class="bill-to">
+            <h3>Bill To:</h3>
+            <div style="font-size: 16px; font-weight: 600; margin-bottom: 10px;">{{pharmacy.name}}</div>
+            <div style="color: #64748b;">
+                {{pharmacy.email}}<br>
+                {{#if pharmacy.phone}}{{pharmacy.phone}}<br>{{/if}}
+                {{#if pharmacy.address}}{{pharmacy.address}}{{/if}}
+            </div>
+        </div>
+        
+        <!-- Billing Table -->
+        <table class="billing-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Period</th>
+                    <th>Quantity</th>
+                    <th>Rate</th>
+                    <th class="amount">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>Monthly App Usage Fee</strong><br>
+                        <small style="color: #64748b;">RxMove platform subscription and support</small>
+                    </td>
+                    <td>{{reportPeriod}}</td>
+                    <td>1 month</td>
+                    <td class="amount">{{appFeeFormatted}}</td>
+                    <td class="amount">{{appFeeFormatted}}</td>
+                </tr>
+                {{#if stats.totalOrders}}
+                <tr>
+                    <td>
+                        <strong>Delivery Processing</strong><br>
+                        <small style="color: #64748b;">{{stats.totalOrders}} orders processed ({{stats.deliveredOrders}} delivered)</small>
+                    </td>
+                    <td>{{reportPeriod}}</td>
+                    <td>{{stats.totalOrders}} orders</td>
+                    <td class="amount">Included</td>
+                    <td class="amount">$0.00</td>
+                </tr>
+                {{/if}}
+                <tr class="total-row">
+                    <td colspan="4"><strong>TOTAL AMOUNT DUE</strong></td>
+                    <td class="amount"><strong>{{totalAmountDueFormatted}}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- Monthly Statistics -->
+        <div class="stats-section">
+            <h3 class="stats-title">Monthly Performance Summary</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">{{stats.totalOrders}}</div>
+                    <div class="stat-label">Total Orders</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{stats.deliveredOrders}}</div>
+                    <div class="stat-label">Delivered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{stats.deliveryRate}}%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{stats.totalRevenueFormatted}}</div>
+                    <div class="stat-label">Delivery Revenue</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{stats.averageOrderValueFormatted}}</div>
+                    <div class="stat-label">Avg Order Value</div>
+                </div>
+                {{#if stats.peakDeliveryDay}}
+                <div class="stat-item">
+                    <div class="stat-value">{{stats.peakDeliveryDay}}</div>
+                    <div class="stat-label">Peak Day</div>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+        
+        <!-- Order Details (if any) -->
+        {{#if orders}}
+        <div class="orders-summary">
+            <h3 class="section-title">Order Summary for {{reportPeriod}}</h3>
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Order #</th>
+                        <th>Customer</th>
+                        <th>Distance</th>
+                        <th>Delivery Cost</th>
+                        <th>To Collect</th>
+                        <th>Collected</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each orders}}
+                    <tr>
+                        <td>{{this.createdAtFormatted}}</td>
+                        <td style="font-weight: 600;">{{this.id}}</td>
+                        <td>{{this.patient_name}}</td>
+                        <td>{{this.distanceFormatted}}</td>
+                        <td style="color: #059669;">{{this.fareFormatted}}</td>
+                        <td style="color: #d97706;">{{this.amtNeedToCollectFormatted}}</td>
+                        <td style="color: #059669;">{{this.amtCollectedFormatted}}</td>
+                        <td class="{{statusClass this.status}}">{{this.statusFormatted}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        {{/if}}
+        
+        <!-- Payment Information -->
+        <div class="payment-info">
+            <h3>Payment Information</h3>
+            <p><strong>Amount Due:</strong> {{totalAmountDueFormatted}}</p>
+            <p><strong>Payment Terms:</strong> Net 30 Days</p>
+            <p><strong>Payment Methods:</strong> Bank Transfer, Credit Card, or E-Transfer</p>
+            <p>For payment arrangements or questions, please contact {{company.email}} or {{company.phone}}</p>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>{{company.name}} - Pharmacy Delivery Platform</strong></p>
+            <p>{{company.address}} | {{company.email}} | {{company.phone}}</p>
+            <p style="margin-top: 10px; font-size: 11px;">
+                Invoice generated on {{generatedDate}} (EST/EDT). 
+                This is an automated invoice generated by {{company.name}} Batch Jobs System.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
