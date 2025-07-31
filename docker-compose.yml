@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  rxmove-batch-jobs:
+    build: .
+    container_name: rxmove-batch-jobs
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - TZ=America/Toronto
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/usr/src/app/logs
+      - ./reports:/usr/src/app/reports
+    networks:
+      - rxmove-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "console.log('Health check passed')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  rxmove-network:
+    driver: bridge
+
+volumes:
+  logs:
+  reports:
