@@ -1,0 +1,35 @@
+{
+  "name": "rxmove-batch-jobs",
+  "version": "1.0.0",
+  "description": "Batch job system for RxMove pharmacy reports and billing",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "daily-reports": "node src/jobs/dailyReports.js",
+    "monthly-reports": "node src/jobs/monthlyReports.js",
+    "test": "node src/test/testReports.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.8",
+    "puppeteer": "^21.6.1",
+    "dotenv": "^16.3.1",
+    "winston": "^3.11.0",
+    "handlebars": "^4.7.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5"
+  },
+  "keywords": [
+    "pharmacy",
+    "delivery",
+    "reports",
+    "batch-jobs",
+    "rxmove"
+  ],
+  "author": "RxMove Team",
+  "license": "MIT"
+}
